@@ -4,12 +4,35 @@ import spockwebconsole.ScriptRunner
 
 def scriptText = request.getParameter("script") ?: "'The received script was null.'"
 
-def rawOutput = new ByteArrayOutputStream()
-def output = new GroovyPrintStream(rawOutput)
-def rawStacktrace = new ByteArrayOutputStream()
-def stacktrace = new GroovyPrintStream(rawStacktrace)
+def encoding = 'UTF-8'
+def stream = new ByteArrayOutputStream()
+def printStream = new PrintStream(stream, true, encoding)
 
-// TODO: need to set thread context class loader to sth. other than app class loader (but not null because null is ignored)
+def stacktrace = new StringWriter()
+def errWriter = new PrintWriter(stacktrace)
+
+def binding = new Binding([out: printStream])
+
+class NoGaeSdkAccessGCL extends GroovyClassLoader {
+  NoGaeSdkAccessGCL(classLoader) {
+    super(classLoader)
+  }
+
+  Class loadClass(final String name, boolean lookupScriptFiles, boolean preferClassOverScript, boolean resolve) {
+    if (name.startsWith('com.google.appengine.'))
+      throw new SecurityException("Access to $name forbidden. You're not allowed to use the App Engine SDK within the console.")
+    super.loadClass(name, lookupScriptFiles, preferClassOverScript, resolve)
+  }
+}
+
+def gcl = new NoGaeSdkAccessGCL(Thread.currentThread().contextClassLoader)
+Thread.currentThread().contextClassLoader = gcl
+
+def originalOut = System.out
+def originalErr = System.err
+
+System.setOut(printStream)
+System.setErr(printStream)
 
 def result = ""
 try {
@@ -22,15 +45,18 @@ try {
 	while (cause = cause?.cause) {
 		sanitizeStacktrace(cause)
 	}
-	t.printStackTrace(stacktrace)
+	t.printStackTrace(errWriter)
+} finally {
+  System.setOut(originalOut)
+  System.setErr(originalErr)
 }
 
 response.contentType = "application/json"
 
 out.println """{
 	executionResult: "${escape(result)}",
- 	outputText: "${escape(rawOutput)}",
- 	stacktraceText: "${escape(rawStacktrace)}"
+ 	outputText: "${escape(stream.toString(encoding))}",
+ 	stacktraceText: "${escape(stacktrace)}"
 }"""
 
 def escape(object) {
@@ -38,19 +64,19 @@ def escape(object) {
 }
 
 def sanitizeStacktrace(t) {
-    def filtered = [
-        'com.google.', 'org.mortbay.',
-        'java.', 'javax.', 'sun.', 
-        'groovy.', 'org.codehaus.groovy.',
-        'groovyx.gaelyk.', 'executor'
+  def filtered = [
+    'com.google.', 'org.mortbay.',
+    'java.', 'javax.', 'sun.', 
+    'groovy.', 'org.codehaus.groovy.',
+    'groovyx.gaelyk.', 'executor'
 	]
-    def trace = t.getStackTrace()
-    def newTrace = []
-    trace.each { stackTraceElement -> 
-        if (filtered.every { !stackTraceElement.className.startsWith(it) }) {
-            newTrace << stackTraceElement
-        }
+  def trace = t.getStackTrace()
+  def newTrace = []
+  trace.each { stackTraceElement -> 
+    if (filtered.every { !stackTraceElement.className.startsWith(it) }) {
+      newTrace << stackTraceElement
     }
-    def clean = newTrace.toArray(newTrace as StackTraceElement[])
-    t.stackTrace = clean
+  }
+  def clean = newTrace.toArray(newTrace as StackTraceElement[])
+  t.stackTrace = clean
 }
