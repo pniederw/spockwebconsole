@@ -1,35 +1,19 @@
+import groovy.io.GroovyPrintStream
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
+import spockwebconsole.ScriptRunner
 
 def scriptText = request.getParameter("script") ?: "'The received script was null.'"
 
-def output = new StringWriter()
-def binding = new Binding([out: new PrintWriter(output)])
+def rawOutput = new ByteArrayOutputStream()
+def output = new GroovyPrintStream(rawOutput)
+def rawStacktrace = new ByteArrayOutputStream()
+def stacktrace = new GroovyPrintStream(rawStacktrace)
 
-def stacktrace = new StringWriter()
-def errWriter = new PrintWriter(stacktrace)
-
-class NoGaeSdkAccessGCL extends GroovyClassLoader {
-    Class loadClass(final String name, boolean lookupScriptFiles, boolean preferClassOverScript, boolean resolve) {
-        if (name.startsWith('com.google.appengine.'))
-            throw new SecurityException("Access to $name forbidden. You're not allowed to use the App Engine SDK within the console.")
-        super.loadClass(name, lookupScriptFiles, preferClassOverScript, resolve)
-    }
-}
-
-def gcl = new NoGaeSdkAccessGCL()
-
-def originalAsType = String.metaClass.metaMethods.find { it.name == 'asType' }
-String.metaClass.asType = { Class c ->
-    if (delegate.startsWith('com.google.appengine.')) {
-        throw new SecurityException("Access to $delegate forbidden. You're not allowed to use the App Engine SDK within the console.")
-    } else {
-        return originalAsType.doMethodInvoke(delegate, c)
-    }
-}
+// TODO: need to set thread context class loader to sth. other than app class loader (but not null because null is ignored)
 
 def result = ""
 try {
-	result = new GroovyShell(gcl, binding).evaluate(scriptText)
+  result = new ScriptRunner().run(scriptText)
 } catch (MultipleCompilationErrorsException e) {
 	stacktrace.append(e.message - 'startup failed, Script1.groovy: ')
 } catch (Throwable t) {
@@ -38,15 +22,15 @@ try {
 	while (cause = cause?.cause) {
 		sanitizeStacktrace(cause)
 	}
-	t.printStackTrace(errWriter)
+	t.printStackTrace(stacktrace)
 }
 
 response.contentType = "application/json"
 
 out.println """{
 	executionResult: "${escape(result)}",
- 	outputText: "${escape(output)}",
- 	stacktraceText: "${escape(stacktrace)}"
+ 	outputText: "${escape(rawOutput)}",
+ 	stacktraceText: "${escape(rawStacktrace)}"
 }"""
 
 def escape(object) {

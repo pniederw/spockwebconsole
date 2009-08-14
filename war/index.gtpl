@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Groovy web console</title>
+        <title>Spock Web Console</title>
         
         <script src="js/codemirror.js" type="text/javascript"></script>
         <script src="js/mirrorframe.js" type="text/javascript"></script>
@@ -17,7 +17,7 @@
             <img src="images/ajax-spinner-blue.gif">
         </div>        
 
-        <h1><a href="/">Groovy web console</a></h1>
+        <h1><a href="/">Spock Web Console</a></h1>
 
         <form id="publishform" action="publish.groovy" method="POST">
             <div id="textarea-container" class="border">
@@ -30,15 +30,15 @@
                 <input id="tags" name="tags" type="hidden" value="">
                 <div id="actionsBreadcrumb">
                     <span class="actionsBreadcrumbHead">Actions &nbsp;&#x27A4;</span>
-                    <span class="actionsBreadcrumbChild" id="executeButton"><a href="javascript:void(0)">Execute script</a></span>
-                    <span class="actionsBreadcrumbChild" id="newScriptButton"><a href="/">New script</a></span>
-                    <span class="actionsBreadcrumbChild" id="publishButton"><a href="/recentscripts.gtpl?limit=40">Publish script</a></span>
-                    <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View recent scripts</a></span>
+                    <span class="actionsBreadcrumbChild" id="executeButton"><a href="javascript:void(0)">Run Script</a></span>
+                    <span class="actionsBreadcrumbChild" id="newScriptButton"><a href="/">New Script</a></span>
+                    <span class="actionsBreadcrumbChild" id="publishButton"><a href="/recentscripts.gtpl?limit=40">Publish Script</a></span>
+                    <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View Recent Scripts</a></span>
                 </div>
             </div>
         </form>
 
-        <div id="dialog" title="Publish your Groovy snippet">
+        <div id="dialog" title="Publish Your Spock Snippet">
             <label for="dialogTitle">Title</label>
             <br/>
             <input type="text" name="dialogTitle" id="dialogTitle" class="text ui-widget-content ui-corner-all"/>
@@ -58,7 +58,7 @@
             <ul>
             	<li><a href="#tabs-result">Result</a></li>
             	<li><a href="#tabs-output">Output</a></li>
-            	<li><a href="#tabs-stacktrace">Stacktrace</a></li>
+            	<li><a href="#tabs-stacktrace">Stack Trace</a></li>
             </ul>
             
             <div id="tabs-result">

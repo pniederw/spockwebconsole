@@ -1,21 +1,21 @@
 <html>
     <head>
-        <title>Groovy web console - Recent scripts ${params.author ? "by " + params.author : ""}</title>
+        <title>Spock Web Console - Recent Scripts ${params.author ? "by " + params.author : ""}</title>
 
         <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     </head>
 
     <body>
-        <h1><a href="/">Groovy web console</a></h1>
+        <h1><a href="/">Spock Web Console</a></h1>
 
-        <h2>Recent scripts ${params.author ? "by " + params.author : ""} ${params.tag ? " with tag '" + params.tag + "'" : ""}</h2>
+        <h2>Recent Scripts ${params.author ? "by " + params.author : ""} ${params.tag ? " with tag '" + params.tag + "'" : ""}</h2>
 
         <div id="actionsBreadcrumb">
             <span class="actionsBreadcrumbHead">Actions &nbsp;&#x27A4;</span>
-            <span class="actionsBreadcrumb${params.author || params.tag ? "" : "Last"}Child"><a href="/">Back to console</a></span>
+            <span class="actionsBreadcrumb${params.author || params.tag ? "" : "Last"}Child"><a href="/">Back To Console</a></span>
             <% if (params.author || params.tag) { %>
-            <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View all recent scripts</a></span>
+            <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View Recent Scripts</a></span>
             <% } %>
         </div>
 

@@ -4,7 +4,7 @@
             def entity = request.getAttribute('entity')
         %>
 
-        <title>Groovy web console - ${entity?.title ?: 'Untitled script'}</title>
+        <title>Spock Web Console - ${entity?.title ?: 'Untitled Script'}</title>
 
         <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
@@ -32,7 +32,7 @@
     <body>
         <script src="js/view.js" type="text/javascript"></script>
     
-        <h1><a href="/">Groovy web console</a></h1>
+        <h1><a href="/">Spock Web Console</a></h1>
 
         <div id="shareThis">
             <table cellspacing="20">
@@ -42,25 +42,25 @@
                             <table>
                                 <tr>
                                     <td><img src="/images/puzzle.png" alt="embed in your blog" align="left" border="0"></td>
-                                    <td><i>Embed<br/>this<br/>script</i></td>
+                                    <td><i>Embed<br/>This<br/>Script</i></td>
                                 </tr>
                             </table>
                         </a>
                     </td>
                     <td>
-                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://groovyconsole.appspot.com/view.groovy?id=${entity.key.id}');">
-                            <span style="display:none;">${entity.title} (via #groovywebconsole)</span>
+                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}');">
+                            <span style="display:none;">${entity.title} (via #spockwebconsole)</span>
                             <table>
                                 <tr>
-                                    <td><img src="/images/twitter.png" alt="tweet this snippet" align="left" border="0"></td>
-                                    <td><i>Tweet<br/>this<br/>script</i></td>
+                                    <td><img src="/images/twitter.png" alt="tweet this script" align="left" border="0"></td>
+                                    <td><i>Tweet<br/>This<br/>Script</i></td>
                                 </tr>
                             </table>
                         </a>
                     </td>
                 </tr>
             </table>
-            <div id="embedText" title="Embed this script">
+            <div id="embedText" title="Embed This Script">
                 <p>To embed this script in your site, just drop the content below where you want to embed it.</p>
                 <textarea cols="55" rows="14">
 &lt;script&gt;
@@ -74,13 +74,13 @@
     gc_height = 100;
 &lt;/script&gt;
 &lt;script language="javascript"
-             src="http://groovyconsole.appspot.com/js/embed.js"&gt;
+             src="http://meetspock.appspot.com/js/embed.js"&gt;
 &lt;/script&gt;
                 </textarea>
             </div>
         </div>
 
-        <h2>${entity?.title ?: 'Untitled script'}</h2>
+        <h2>${entity?.title ?: 'Untitled Script'}</h2>
         <div id="publishedby">
             <img src="/images/date.png" align="top">
             Published ${new com.ocpsoft.pretty.time.PrettyTime().format(entity.dateCreated)}
@@ -112,10 +112,10 @@
 
         <div id="actionsBreadcrumb">
             <span class="actionsBreadcrumbHead">Actions &nbsp;&#x27A4;</span>
-            <span class="actionsBreadcrumbChild"><a href="/?id=${entity.key.id}">Edit in console</a></span>
-            <span class="actionsBreadcrumbChild"><a href="/">Back to console</a></span>
-            <span class="actionsBreadcrumbChild" id="toggleLineNumbers"><a href="javascript:void(0)">Show/hide line numbers</a></span>
-            <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View recent scripts</a></span>
+            <span class="actionsBreadcrumbChild"><a href="/?id=${entity.key.id}">Edit In Console</a></span>
+            <span class="actionsBreadcrumbChild"><a href="/">Back To Console</a></span>
+            <span class="actionsBreadcrumbChild" id="toggleLineNumbers"><a href="javascript:void(0)">Show/Hide Line Numbers</a></span>
+            <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View Recent Scripts</a></span>
         </div>
 
         <pre class="brush:groovy">${entity.script.value.replaceAll('<', '&lt;')}</pre>

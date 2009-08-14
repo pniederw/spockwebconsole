@@ -1,14 +1,13 @@
 <div id="footer">
-    <h2>Console tips</h2>
+    <h2>Tips & Tricks</h2>
     <ul>
-        <li>You can hit Alt-Meta-R to execute the current script without using the execute button.</li>
-        <li>You can resize the script view by sliding down the bottom of the line number gutter.</li>
+        <li>Press Alt-Meta-R to run a script</li>
+        <li>To resize the visible script area, drag the horizontal rule </li>
     </ul>
-    <h2>About this site:</h2>
+    <h2>About Spock Web Console</h2>
     <ul>
-        <li>Application deployed on <a href="http://code.google.com/appengine">Google App Engine</a></li>
-        <li>Developed with the <a href="http://gaelyk.appspot.com">Gaelyk</a> lightweigh Groovy toolkit for Google App Engine</li>
-        <li>Code hosted on <a href="http://github.com/glaforge/groovywebconsole/tree/master">GitHub</a> and managed with Git</li>
+        <li>Based on the fabulous <a href="http://groovyconsole.appspot.com">Groovy Web Console</a></li>
+        <li>Code hosted on <a href="http://github.com/pniederw/spockwebconsole/tree/master">GitHub</a></li>
         <li>Live syntax highlighting provided by <a href="http://marijn.haverbeke.nl/codemirror/">CodeMirror</a></li>
         <li>Syntax highlighting for sharing provided by <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a></li>
     </ul>

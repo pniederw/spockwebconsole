@@ -1,5 +1,5 @@
-Source code of the Groovy Web Console hosted on Google App Engine
-http://groovyconsole.appspot.com
+Source code of the Spock Web Console hosted on Google App Engine
+http://meet.spockframework.org
 
 To embed one script in your site, just drop the content below where you want to embed it.
 
@@ -8,5 +8,5 @@ To embed one script in your site, just drop the content below where you want to 
 	gc_width = 300; //The iframe's width
 	gc_height = 100;  //The iframe's height
 </script>
-<script language="javascript" src="http://groovyconsole.appspot.com/js/embed.js"></script>
+<script language="javascript" src="http://meet.spockframework.org/js/embed.js"></script>
 
