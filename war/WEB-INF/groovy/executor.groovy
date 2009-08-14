@@ -1,22 +1,52 @@
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
 import spockwebconsole.ScriptRunner
 
+static encoding = 'UTF-8'
+static threadLocalOutErrStream = new ThreadLocal()
+static delegatingOutStream = new ThreadLocalDelegatingStream(original: System.out, threadLocal: threadLocalOutErrStream)
+static delegatingErrStream = new ThreadLocalDelegatingStream(original: System.err, threadLocal: threadLocalOutErrStream)
+static systemOutStream = new PrintStream(delegatingOutStream, true, encoding)
+static systemErrStream = new PrintStream(delegatingErrStream, true, encoding)
+
+static globalRedirect = {
+  System.setOut(systemOutStream)
+  System.setErr(systemErrStream)
+}()
+
+class ThreadLocalDelegatingStream extends OutputStream {
+  def original
+  def threadLocal
+
+  void write(int b) {
+    (threadLocal.get() ?: original).write(b)
+  }
+
+  void write(byte[] b) {
+    (threadLocal.get() ?: original).write(b)
+  }
+
+  void write(byte[] b, int off, int len) {
+    (threadLocal.get() ?: original).write(b, off, len)
+  }
+
+  void flush() {
+    (threadLocal.get() ?: original).flush()
+  }
+
+  void close() {
+    (threadLocal.get() ?: original).close()
+  }
+}
+
 def scriptText = request.getParameter("script") ?: "'The received script was null.'"
 
-def encoding = 'UTF-8'
 def stream = new ByteArrayOutputStream()
-def printStream = new PrintStream(stream, true, encoding)
 
 def stacktrace = new StringWriter()
 def errWriter = new PrintWriter(stacktrace)
 
-def originalOut = System.out
-def originalErr = System.err
-
-System.setOut(printStream)
-System.setErr(printStream)
-
 def result = ""
+threadLocalOutErrStream.set(stream)
 try {
   result = new ScriptRunner().run(scriptText)
 } catch (MultipleCompilationErrorsException e) {
@@ -29,8 +59,7 @@ try {
 	}
 	t.printStackTrace(errWriter)
 } finally {
-  System.setOut(originalOut)
-  System.setErr(originalErr)
+  threadLocalOutErrStream.remove()
 }
 
 response.contentType = "application/json"
