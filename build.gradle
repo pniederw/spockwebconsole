@@ -32,13 +32,13 @@ war.doLast {
   ant.unzip src: war.archivePath, dest: explodedWar
 }   
 
-task wrapper(type: Wrapper) { 
+task wrapper(type: Wrapper) {
   description = "create Gradle wrapper (rarely needed)"
   gradleVersion = '0.7' 
   jarPath = 'wrapper' 
 }
 
-task jetty << {
+task jettyStart << {
   description = "start the development application server"
   exec "dev_appserver.sh $explodedWar.absolutePath"
 }
@@ -49,7 +49,7 @@ task jettyStop << {
   exec """ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " \$1);}'"""  
 }
 
-task deploy << {
+task deploy(dependsOn: war) << {
   description = "deploy application to Google App Engine"
   exec "appcfg.sh update $explodedWar.absolutePath"
 }
