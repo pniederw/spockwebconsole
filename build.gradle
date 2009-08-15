@@ -1,0 +1,62 @@
+group = "org.spockframework"
+version = "1.0"
+
+usePlugin "war"
+usePlugin "groovy" 
+sourceCompatibility = 1.6 
+targetCompatibility = 1.6
+
+def explodedWar = file("$buildDir/exploded")
+
+repositories {
+  flatDir dirs: "$rootDir/lib"
+  mavenCentral()
+  mavenRepo urls: "http://m2repo.spockframework.org/snapshots"
+}
+
+dependencies {
+  // from Maven repos
+  compile "org.spockframework:spock-core:0.3-SNAPSHOT@jar"
+  compile "junit:junit:4.6"
+  
+  // from lib folder
+  groovy ":groovy-all-1.6.5-SNAPSHOT"
+  runtime ":appengine-api-1.0-sdk:1.2.2"
+  runtime ":gaelyk-0.1"
+  runtime ":ocpsoft-pretty-time-1:1.0.2"
+  //providedCompile "javax.servlet:servlet-api:2.5"
+}
+
+war.doLast {
+  // create exploded WAR directory
+  ant.unzip src: war.archivePath, dest: explodedWar
+}   
+
+task wrapper(type: Wrapper) { 
+  description = "create Gradle wrapper (rarely needed)"
+  gradleVersion = '0.7' 
+  jarPath = 'wrapper' 
+}
+
+task jetty << {
+  description = "start the development application server"
+  exec "dev_appserver.sh $explodedWar.absolutePath"
+}
+
+task jettyStop << {
+  description = "stop the development application server"
+  // works on command line but not here - why?
+  exec """ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " \$1);}'"""  
+}
+
+task deploy << {
+  description = "deploy application to Google App Engine"
+  exec "appcfg.sh update $explodedWar.absolutePath"
+}
+
+def exec(command) {
+  println "Executing: $command"
+  def proc = command.execute()
+}
+
+

@@ -1,12 +1,32 @@
-Source code of the Spock Web Console hosted on Google App Engine
-http://meet.spockframework.org
+Spock Web Console
+=================
+Spock Web Console is a place to learn about Spock, the testing and specification framework for Java and Groovy applications. The code base is a fork of Groovy Web Console and hosted on GitHub. The application is hosted on Google App Engine.
 
-To embed one script in your site, just drop the content below where you want to embed it.
+Building the Project
+--------------------
+The build is based on the Gradle build system (http://www.gradle.org).
+
+Type: ./gradlew war (Windows: gradlew war)
+
+If not already present, the Gradle distribution and build dependencies will be downloaded automatically.
+
+Embedding a Spock Script
+------------------------
+To embed a Spock script in your site, use the following snippet:
 
 <script>
-	gc_id = 1; //the script id you want to embed, you can get this in its url
-	gc_width = 300; //The iframe's width
-	gc_height = 100;  //The iframe's height
+	gc_id = 1;       // the script ID as stated in the script's URL
+	gc_width = 300;  // the iframe's width
+	gc_height = 100; // the iframe's height
 </script>
 <script language="javascript" src="http://meet.spockframework.org/js/embed.js"></script>
 
+Links
+-----
+Spock Web Console          http://meet.spockframework.org
+Spock Web Console Project  http://github.com/pniederw/spockwebconsole/tree/master
+Spock Framework Homepage   http://spockframework.org
+
+Groovy Web Console         http://groovyconsole.appspot.com
+Groovy Web Console Project http://github.com/glaforge/groovywebconsole/tree/master
+           
