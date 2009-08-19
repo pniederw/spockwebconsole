@@ -3,8 +3,8 @@ version = "1.0"
 
 usePlugin "war"
 usePlugin "groovy" 
-sourceCompatibility = 1.6 
-targetCompatibility = 1.6
+sourceCompatibility = 1.5 
+targetCompatibility = 1.5
 
 def explodedWar = file("$buildDir/exploded")
 

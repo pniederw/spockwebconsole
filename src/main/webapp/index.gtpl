@@ -1,6 +1,12 @@
 <html>
     <head>
         <title>Spock Web Console</title>
+
+        <link rel="alternate"
+                type="application/atom+xml"
+                href="/atom.groovy"
+                title="Spock Web Console Scripts Atom Feed"
+        />
         
         <script src="js/codemirror.js" type="text/javascript"></script>
         <script src="js/mirrorframe.js" type="text/javascript"></script>
@@ -19,11 +25,27 @@
 
         <h1><a href="/">Spock Web Console</a></h1>
 
+
         <form id="publishform" action="publish.groovy" method="POST">
             <div id="textarea-container" class="border">
                 <textarea id="script" name="script" cols="140" rows="40"><% include "/loadscript.groovy" %></textarea>
             </div>
-        
+
+            <table cellspacing="10" style="float:right">
+            <tr>
+                <td>
+                    <a id="atomLink" href="/atom.groovy">
+                        <table>
+                            <tr>
+                                <td><img src="/images/atom-feed.png" alt="subscribe to the feed" align="left" border="0"></td>
+                                <td><i>Subscribe</i></td>
+                            </tr>
+                        </table>
+                    </a>
+                </td>
+            </tr>
+        </table>
+            
             <div id="button-bar">
                 <input id="title" name="title" type="hidden" value="">
                 <input id="author" name="author" type="hidden" value="">
@@ -38,7 +60,7 @@
             </div>
         </form>
 
-        <div id="dialog" title="Publish Your Spock Snippet">
+        <div id="dialog" title="Publish Your Spock Script">
             <label for="dialogTitle">Title</label>
             <br/>
             <input type="text" name="dialogTitle" id="dialogTitle" class="text ui-widget-content ui-corner-all"/>

@@ -6,6 +6,12 @@
 
         <title>Spock Web Console - ${entity?.title ?: 'Untitled Script'}</title>
 
+        <link rel="alternate"
+                type="application/atom+xml"
+                href="/atom.groovy"
+                title="Groovy Web Console Scripts Atom Feed"
+        />
+
         <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 
@@ -38,22 +44,33 @@
             <table cellspacing="20">
                 <tr>
                     <td>
-                        <a id="embedLink" href="#">
+                        <a id="atomLink" href="/atom.groovy">
                             <table>
                                 <tr>
-                                    <td><img src="/images/puzzle.png" alt="embed in your blog" align="left" border="0"></td>
-                                    <td><i>Embed<br/>This<br/>Script</i></td>
+                                    <td><img src="/images/atom-feed.png" alt="subscribe to the feed" align="left" border="0"></td>
+                                    <td><i>Subscribe</i></td>
                                 </tr>
                             </table>
                         </a>
                     </td>
+                    <td>
+                        <a id="embedLink" href="#">
+                            <table>
+                                <tr>
+                                    <td><img src="/images/puzzle.png" alt="embed in your blog" align="left" border="0"></td>
+                                    <td><i>Embed</i></td>
+                                </tr>
+                            </table>
+                        </a>
+                    </td>
+
                     <td>
                         <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}');">
                             <span style="display:none;">${entity.title} (via #spockwebconsole)</span>
                             <table>
                                 <tr>
                                     <td><img src="/images/twitter.png" alt="tweet this script" align="left" border="0"></td>
-                                    <td><i>Tweet<br/>This<br/>Script</i></td>
+                                    <td><i>Tweet</i></td>
                                 </tr>
                             </table>
                         </a>

@@ -1,4 +1,5 @@
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
+import com.google.apphosting.api.ApiProxy
 import spockwebconsole.ScriptRunner
 
 static encoding = 'UTF-8'
@@ -46,6 +47,8 @@ def stacktrace = new StringWriter()
 def errWriter = new PrintWriter(stacktrace)
 
 def result = ""
+def env = ApiProxy.getCurrentEnvironment()
+ApiProxy.clearEnvironmentForCurrentThread()
 threadLocalOutErrStream.set(stream)
 try {
   result = new ScriptRunner().run(scriptText)
@@ -60,6 +63,7 @@ try {
 	t.printStackTrace(errWriter)
 } finally {
   threadLocalOutErrStream.remove()
+  ApiProxy.setEnvironmentForCurrentThread(env)
 }
 
 response.contentType = "application/json"
