@@ -32,25 +32,21 @@ war.doLast {
   ant.unzip src: war.archivePath, dest: explodedWar
 }   
 
-task wrapper(type: Wrapper) {
-  description = "create Gradle wrapper (rarely needed)"
+task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
   gradleVersion = '0.7' 
   jarPath = 'wrapper' 
 }
 
-task jettyStart << {
-  description = "start the development application server"
+task jettyStart(description: "Starts the development application server") << {
   exec "dev_appserver.sh $explodedWar.absolutePath"
 }
 
-task jettyStop << {
-  description = "stop the development application server"
+task jettyStop(description: "Stops the development application server") << {
   // works on command line but not here - why?
   exec """ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " \$1);}'"""  
 }
 
-task deploy(dependsOn: war) << {
-  description = "deploy application to Google App Engine"
+task deploy(dependsOn: war, description: "Deploys application to Google App Engine") << {
   exec "appcfg.sh update $explodedWar.absolutePath"
 }
 
