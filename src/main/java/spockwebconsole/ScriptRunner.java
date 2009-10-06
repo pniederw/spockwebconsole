@@ -7,6 +7,9 @@ import org.junit.runner.JUnitCore;
 
 import org.spockframework.runtime.model.SpeckMetadata;
 
+/**
+ * Runs a script containing one or more Spock specifications.
+ */
 public class ScriptRunner {
   public String run(String scriptText) {
     scriptText = addSpockLangStarImport(scriptText);
