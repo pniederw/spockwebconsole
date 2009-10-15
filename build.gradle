@@ -16,12 +16,12 @@ repositories {
 
 dependencies {
   // from Maven repos
+  groovy "org.codehaus.groovy:groovy-all:1.6.5"
   compile "org.spockframework:spock-core:0.3-SNAPSHOT@jar"
-  compile "junit:junit:4.6"
+  compile "junit:junit:4.7"
   
   // from lib folder
-  groovy ":groovy-all-1.6.5-SNAPSHOT"
-  runtime ":appengine-api-1.0-sdk:1.2.2"
+  runtime ":appengine-api-1.0-sdk:1.2.6"
   runtime ":gaelyk-0.1"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
