@@ -26,24 +26,41 @@ import org.junit.runner.Result;
 
 public class TestListener extends RunListener {
   private final StringBuilder result = new StringBuilder();
-  private final List<String> testClassNames = new ArrayList<String>();
+  private final List<String> visitedTestClasses = new ArrayList<String>();
   private boolean firstFailure;
-  
+
   public void testRunStarted(Description description) {}
 
   public void testRunFinished(Result result) {}
 
   public void testStarted(Description description) {
-    String className = description.getClassName();
-    if (!testClassNames.contains(className)) {
-      if (!testClassNames.isEmpty())
-        result.append("\n");
-      result.append(className).append("\n");
-      testClassNames.add(className);
-    }
+    printTestClassNameIfNotYetVisited(description, true);
     result.append(" - ").append(description.getMethodName());
 
     firstFailure = true;
+  }
+
+  private void printTestClassNameIfNotYetVisited(Description description, boolean addNewLine) {
+    String className = getClassName(description);
+    if (visitedTestClasses.contains(className)) return;
+
+    if (!visitedTestClasses.isEmpty()) result.append("\n");
+    result.append(className);
+    if (addNewLine) result.append("\n");
+    visitedTestClasses.add(className);
+  }
+
+  private String getClassName(Description description) {
+    return isTestClass(description) ? description.getDisplayName() : description.getClassName();
+  }
+
+  // cannot use Description.isSuite() because it returns false for Description
+  // of test class w/o test methods; probably JUnit does not run into this problem
+  // because it doesn't allow test classes w/o test methods in the first place;
+  // but even if we would do the same for Spock, we would still run into problems
+  // at least for empty @Ignore'd specs
+  private boolean isTestClass(Description description) {
+    return !description.getDisplayName().endsWith(")"); // sad but true
   }
 
   public void testFinished(Description description) {
@@ -67,7 +84,13 @@ public class TestListener extends RunListener {
   }
 
   public void testIgnored(Description description) {
-    result.append(" - ").append(description.getMethodName()).append("   IGNORED\n");
+    if (isTestClass(description)) {
+      printTestClassNameIfNotYetVisited(description, false);
+    } else {
+      printTestClassNameIfNotYetVisited(description, true);
+      result.append(" - ").append(description.getMethodName());
+    }
+    result.append("   IGNORED\n");
   }
 
   public String getResult() {

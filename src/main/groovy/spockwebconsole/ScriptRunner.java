@@ -16,12 +16,13 @@
 
 package spockwebconsole;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.runner.JUnitCore;
 
-import org.spockframework.runtime.model.SpeckMetadata;
+import org.spockframework.runtime.SpecUtil;
 
 /**
  * Runs a script containing one or more Spock specifications.
@@ -32,6 +33,8 @@ public class ScriptRunner {
     ScriptCompiler compiler = new ScriptCompiler();
     List<Class> classes = compiler.compile(scriptText);
     List<Class> testClasses = findTestClasses(classes);
+    if (testClasses.isEmpty()) return "No runnable specifications found";
+    
     JUnitCore junit = new JUnitCore();
     TestListener listener = new TestListener();
     junit.addListener(listener);
@@ -46,7 +49,7 @@ public class ScriptRunner {
   private List<Class> findTestClasses(List<Class> classes) {
     List<Class> testClasses = new ArrayList<Class>();
     for (Class clazz : classes)
-      if (clazz.isAnnotationPresent(SpeckMetadata.class))
+      if (SpecUtil.isSpec(clazz) && !Modifier.isAbstract(clazz.getModifiers()))
         testClasses.add(clazz);
     return testClasses;
   }

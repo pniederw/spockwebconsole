@@ -17,7 +17,7 @@ repositories {
 dependencies {
   // from Maven repos
   groovy "org.codehaus.groovy:groovy-all:1.6.5"
-  compile "org.spockframework:spock-core:0.3-SNAPSHOT@jar"
+  compile "org.spockframework:spock-core:0.4-SNAPSHOT@jar"
   compile "junit:junit:4.7"
   
   // from lib folder
@@ -30,7 +30,7 @@ dependencies {
 war.doLast {
   // create exploded WAR directory
   ant.unzip src: war.archivePath, dest: explodedWar
-}   
+}
 
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
   gradleVersion = '0.7' 
