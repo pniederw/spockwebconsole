@@ -6,11 +6,14 @@ $(document).ready(function() {
         $("#dialog").dialog({
 			bgiframe: true,
 			autoOpen: false,
-			height: 330,
+			height: 400,
 			width: 330,
 			modal: true,
 			buttons: {
 				Submit: function() {
+                    $("#captchaQuestion").val($("#dialogCaptchaQuestion").val());
+                    $("#captchaAnswer").val($("#dialogCaptchaAnswer").val());
+                    $("#title").val($("#dialogTitle").val());
                     $("#title").val($("#dialogTitle").val());
                     $("#author").val($("#dialogAuthor").val());
                     $("#tags").val($("#dialogTags").val());
@@ -36,7 +39,7 @@ $(document).ready(function() {
     $("#executeButton").click(function(event) {
 		$.ajax({
 		   	type: "POST",
-		    url: "executor.groovy",
+		    url: "/executor.groovy",
 		    data: { script: editor.getCode() },
 			dataType: "json",
 			
@@ -70,7 +73,7 @@ $(document).ready(function() {
 		    },
 
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("Error interacting with the Groovy web console server: " + errorThrown);
+				alert("Error interacting with the Spock Web Console server: " + errorThrown);
 			}
 
 		});

@@ -24,9 +24,9 @@ To embed a Spock script in your site, use the following snippet:
 Links
 -----
 Spock Web Console          http://meet.spockframework.org
-Spock Web Console Project  http://github.com/pniederw/spockwebconsole/tree/master
+Spock Web Console Project  http://github.com/pniederw/spockwebconsole
 Spock Framework Homepage   http://spockframework.org
 
 Groovy Web Console         http://groovyconsole.appspot.com
-Groovy Web Console Project http://github.com/glaforge/groovywebconsole/tree/master
+Groovy Web Console Project http://github.com/glaforge/groovywebconsole
            

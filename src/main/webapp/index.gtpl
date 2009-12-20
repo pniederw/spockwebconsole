@@ -8,16 +8,16 @@
                 title="Spock Web Console Scripts Atom Feed"
         />
         
-        <script src="js/codemirror.js" type="text/javascript"></script>
-        <script src="js/mirrorframe.js" type="text/javascript"></script>
-        <script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
-        <script src="js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+        <script src="/js/codemirror.js" type="text/javascript"></script>
+        <script src="/js/mirrorframe.js" type="text/javascript"></script>
+        <script src="/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+        <script src="/js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
         
-        <link rel="stylesheet" type="text/css" href="css/redmond/jquery-ui-1.7.1.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     </head>
     <body>
-        <script src="js/main.js" type="text/javascript"></script>      
+        <script src="/js/main.js" type="text/javascript"></script>      
 
         <div id="loadingDiv">
             <img src="images/ajax-spinner-blue.gif">
@@ -25,8 +25,7 @@
 
         <h1><a href="/">Spock Web Console</a></h1>
 
-
-        <form id="publishform" action="publish.groovy" method="POST">
+        <form id="publishform" action="/publish.groovy" method="POST">
             <div id="textarea-container" class="border">
                 <textarea id="script" name="script" cols="140" rows="40"><% include "/loadscript.groovy" %></textarea>
             </div>
@@ -44,18 +43,20 @@
                     </a>
                 </td>
             </tr>
-        </table>
+            </table>
             
             <div id="button-bar">
                 <input id="title" name="title" type="hidden" value="">
                 <input id="author" name="author" type="hidden" value="">
                 <input id="tags" name="tags" type="hidden" value="">
+                <input id="captchaQuestion" name="captchaQuestion" type="hidden" value="">
+                <input id="captchaAnswer" name="captchaAnswer" type="hidden" value="">
                 <div id="actionsBreadcrumb">
                     <span class="actionsBreadcrumbHead">Actions &nbsp;&#x27A4;</span>
                     <span class="actionsBreadcrumbChild" id="executeButton"><a href="javascript:void(0)">Run Script</a></span>
                     <span class="actionsBreadcrumbChild" id="newScriptButton"><a href="/">New Script</a></span>
-                    <span class="actionsBreadcrumbChild" id="publishButton"><a href="/recentscripts.gtpl?limit=40">Publish Script</a></span>
-                    <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View Recent Scripts</a></span>
+                    <span class="actionsBreadcrumbChild" id="publishButton"><a href="javascript:void(0)">Publish Script</a></span>
+                    <span class="actionsBreadcrumbLastChild"><a href="/scripts">View Recent Scripts</a></span>
                 </div>
             </div>
         </form>
@@ -74,6 +75,15 @@
             <label for="dialogTags">Tags <span class="smaller">(comma separated)</span></label>
             <br/>
             <input type="text" name="dialogTags" id="dialogTags" value="" class="text ui-widget-content ui-corner-all"/>
+            <br/>
+            <br/>
+            <%
+                def calculation = new Random().nextInt(10) + ' + ' + new Random().nextInt(10)
+            %>
+            <label for="captchaAnswer">Captcha question: ${calculation}</label>
+            <br/>
+            <input type="text" name="dialogCaptchaAnswer" id="dialogCaptchaAnswer" value="" class="text ui-widget-content ui-corner-all"/>
+            <input type="hidden" name="dialogCaptchaQuestion" id="dialogCaptchaQuestion" value="${calculation}"/>
         </div>
         
         <div id="tabs">
@@ -102,8 +112,8 @@
         	var editor = CodeMirror.fromTextArea('script', {
                 height: "300px",
                 parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
-                stylesheet: "css/jscolors.css",
-                path: "js/",
+                stylesheet: "/css/jscolors.css",
+                path: "/js/",
                 continuousScanning: 500,
                 lineNumbers: true,
                 textWrapping: false,

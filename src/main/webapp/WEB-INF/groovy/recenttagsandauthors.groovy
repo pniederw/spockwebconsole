@@ -6,7 +6,7 @@ import static com.google.appengine.api.datastore.FetchOptions.Builder.*
 def query = new Query("savedscript")
 query.addSort("dateCreated", Query.SortDirection.DESCENDING)
 
-PreparedQuery preparedQuery = datastoreService.prepare(query)
+PreparedQuery preparedQuery = datastore.prepare(query)
 
 def entities = preparedQuery.asList(withDefault())
 
@@ -18,7 +18,7 @@ html.ul(class: 'taglist') {
         if (tag) {
             li {
                 img src: '/images/tag_blue.png', align: 'top'
-                a href: "/recentscripts.gtpl?tag=${tag}&limit=40", tag
+                a href: "/tag/${tag}", tag
                 span class: 'smaller', "(${tagMap[tag].size()})"
             }
         }
@@ -33,7 +33,7 @@ html.ul(class: 'taglist') {
         if (author && author != 'Anonymous') {
             li {
                 img src: '/images/user.png', align: 'top'
-                a href: "/recentscripts.gtpl?author=${author}&limit=40", author
+                a href: "/author/${author}", author
                 span class: 'smaller', "(${authorMap[author].size()})"
             }
         }

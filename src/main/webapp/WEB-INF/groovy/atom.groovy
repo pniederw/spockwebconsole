@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
  
 def query = new Query("savedscript")
 query.addSort("dateCreated", Query.SortDirection.DESCENDING)
-PreparedQuery preparedQuery = datastoreService.prepare(query)
+PreparedQuery preparedQuery = datastore.prepare(query)
 def entities = preparedQuery.asList(withLimit(10))
  
 def isoTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
@@ -28,7 +28,7 @@ mkp.feed(xmlns: "http://www.w3.org/2005/Atom") {
         name "Peter Niederwieser"
         email "pniederw@gmail.com"
     }
-    generator(uri: "http://gaelyk.appspot.com", version: "1.0", "Gaelyk lightweight Groovy toolkit for Google App Engine")
+    generator(uri: "http://gaelyk.appspot.com", version: "0.3.2", "Gaelyk lightweight Groovy toolkit for Google App Engine")
  
     entities.each { entity ->
         def authorText = entity.author && entity.author != 'Anonymous' ? entity.author : 'Anonymous'
@@ -36,7 +36,7 @@ mkp.feed(xmlns: "http://www.w3.org/2005/Atom") {
         entry {
             id entity.key.id
             title titleText
-            link href: "http://meetspock.appspot.com/view.groovy?id=${entity.key.id}"
+            link href: "http://meetspock.appspot.com/script/${entity.key.id}"
             updated isoTime.format(entity.dateCreated)
             summary "Script posted by ${authorText} on Spock Web Console at ${prettyDate.format(entity.dateCreated)}."
             author {

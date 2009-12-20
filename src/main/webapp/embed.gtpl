@@ -27,11 +27,11 @@
                 <span class="gwcPublished">
                     <img src="/images/date.png" align="top">
                     Published ${new com.ocpsoft.pretty.time.PrettyTime().format(entity.dateCreated)}
-                    on the <a href="http://meetspock.appspot.com/view.groovy?id=${entity.key.id}">Spock Web Console</a>
+                    on the <a href="http://meetspock.appspot.com/script/${entity.key.id}">Spock Web Console</a>
                 </span>
                 <span class="gwcAuthor">
                     by <img src="/images/user.png" align="top">
-                    <a href="http://meetspock.appspot.com/recentscripts.gtpl?author=${URLEncoder.encode(entity.author)}&limit=40">${entity.author}</a>
+                    <a href="http://meetspock.appspot.com/author/${URLEncoder.encode(entity.author)}">${entity.author}</a>
                 </span>
             </div>
             <pre class="brush:groovy">${entity.script.value.replaceAll('<', '&lt;')}</pre>

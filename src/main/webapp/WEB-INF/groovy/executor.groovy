@@ -5,7 +5,7 @@ import com.google.apphosting.api.ApiProxy
 import spockwebconsole.ScriptRunner
 import spockwebconsole.ScriptOutput
 
-def scriptText = request.getParameter("script") ?: "'The received script was null.'"
+def scriptText = params.script ?: "'The received script was null.'"
 
 def result = ""
 def output = new ByteArrayOutputStream()
@@ -34,7 +34,7 @@ response.contentType = "application/json"
 
 out.println """{
 	executionResult: "${escape(result)}",
- 	outputText: "${escape(output.toString('utf-8'))}",
+ 	outputText: "${escape(output.toString('UTF-8'))}",
  	stacktraceText: "${escape(stacktrace)}"
 }"""
 

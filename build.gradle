@@ -16,13 +16,14 @@ repositories {
 
 dependencies {
   // from Maven repos
-  groovy "org.codehaus.groovy:groovy-all:1.6.5"
+  groovy "org.codehaus.groovy:groovy-all:1.6.7"
   compile "org.spockframework:spock-core:0.4-SNAPSHOT@jar"
   compile "junit:junit:4.7"
   
   // from lib folder
-  runtime ":appengine-api-1.0-sdk:1.2.6"
-  runtime ":gaelyk-0.1"
+  runtime ":appengine-api-1.0-sdk:1.3.0"
+  runtime ":appengine-api-labs:1.3.0"
+  runtime ":gaelyk:0.3.2"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
 }
@@ -33,7 +34,7 @@ war.doLast {
 }
 
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
-  gradleVersion = '0.7' 
+  gradleVersion = '0.8' 
   jarPath = 'wrapper' 
 }
 

@@ -18,8 +18,8 @@
         <link type="text/css" rel="stylesheet" href="/css/shCore.css"/>
         <link type="text/css" rel="stylesheet" href="/css/shThemeDefault.css"/>
 
-        <script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
-        <script src="js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+        <script src="/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+        <script src="/js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
 
         <script language="javascript" src="/js/shCore.js"></script>
         <script language="javascript" src="/js/shBrushGroovy.js"></script>
@@ -36,7 +36,7 @@
     </head>
 
     <body>
-        <script src="js/view.js" type="text/javascript"></script>
+        <script src="/js/view.js" type="text/javascript"></script>
     
         <h1><a href="/">Spock Web Console</a></h1>
 
@@ -65,7 +65,7 @@
                     </td>
 
                     <td>
-                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}');">
+                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/script/${entity.key.id}');">
                             <span style="display:none;">${entity.title} (via #spockwebconsole)</span>
                             <table>
                                 <tr>
@@ -106,7 +106,7 @@
                 if (entity.author && entity.author != 'Anonymous') {
             %>
                 <img src="/images/user.png" align="top">
-                <a href="/recentscripts.gtpl?author=${entity.author}&limit=40">${entity.author}</a>
+                <a href="/author/${entity.author}">${entity.author}</a>
             <%
                 } else {
             %>
@@ -120,7 +120,7 @@
                     entity.tags.each { tag ->
             %>
                 <img src="/images/tag_blue.png" align="top">
-                <a href="/recentscripts.gtpl?tag=${tag}&limit=40">${tag}</a>
+                <a href="/tag/${tag}">${tag}</a>
             <%
                     }
                 }
@@ -132,7 +132,7 @@
             <span class="actionsBreadcrumbChild"><a href="/?id=${entity.key.id}">Edit In Console</a></span>
             <span class="actionsBreadcrumbChild"><a href="/">Back To Console</a></span>
             <span class="actionsBreadcrumbChild" id="toggleLineNumbers"><a href="javascript:void(0)">Show/Hide Line Numbers</a></span>
-            <span class="actionsBreadcrumbLastChild"><a href="/recentscripts.gtpl?limit=40">View Recent Scripts</a></span>
+            <span class="actionsBreadcrumbLastChild"><a href="/scripts">View Recent Scripts</a></span>
         </div>
 
         <pre class="brush:groovy">${entity.script.value.replaceAll('<', '&lt;')}</pre>
@@ -140,7 +140,7 @@
         <div id="commentsArea">
             <script>
                 var idcomments_acct = 'ffac2056f3a0f603b8799858d3af8299';
-                var idcomments_post_id;
+                var idcomments_post_id = 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}';
                 var idcomments_post_url;
                 </script>
                 <span id="IDCommentsPostTitle" style="display:none"></span>

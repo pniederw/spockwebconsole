@@ -5,7 +5,7 @@
         <link rel="alternate"
                 type="application/atom+xml"
                 href="/atom.groovy"
-                title="Groovy Web Console snippets atom feed"
+                title="Spock Web Console Scripts Atom Feed"
         />
 
         <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
