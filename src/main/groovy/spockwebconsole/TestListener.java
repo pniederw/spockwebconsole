@@ -90,7 +90,7 @@ public class TestListener extends RunListener {
       printTestClassNameIfNotYetVisited(description, true);
       result.append(" - ").append(description.getMethodName());
     }
-    result.append("   IGNORED\n");
+    result.append("   SKIPPED\n");
   }
 
   public String getResult() {
