@@ -7,7 +7,7 @@
     <h2>About Spock Web Console</h2>
     <ul>
         <li>Based on <a href="http://groovyconsole.appspot.com">Groovy Web Console</a>, code hosted on <a href="http://github.com/pniederw/spockwebconsole/tree/master">GitHub</a></li>
-        <li>Powered by <a href="http://groovy.codehaus.org">Groovy 1.6.7</a> and <a href="http://spockframework.org">Spock ${org.spockframework.Version.instance}</a></li>
+        <li>Powered by <a href="http://groovy.codehaus.org">Groovy ${org.spockframework.util.GroovyReleaseInfo.version}</a> and <a href="http://spockframework.org">Spock ${org.spockframework.util.SpockReleaseInfo.version}</a></li>
         <li>Syntax highlighting provided by <a href="http://marijn.haverbeke.nl/codemirror/">CodeMirror</a> and <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a></li>
     </ul>
 </div>

@@ -16,8 +16,8 @@ repositories {
 
 dependencies {
   // from Maven repos
-  groovy "org.codehaus.groovy:groovy-all:1.6.8"
-  compile "org.spockframework:spock-core:0.4-SNAPSHOT@jar"
+  groovy "org.codehaus.groovy:groovy-all:1.7.2"
+  compile "org.spockframework:spock-core:0.4-groovy-1.7-SNAPSHOT@jar"
   compile "junit:junit:4.8.1"
   
   // from lib folder
