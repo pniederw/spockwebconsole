@@ -9,7 +9,7 @@
         <link rel="alternate"
                 type="application/atom+xml"
                 href="/atom.groovy"
-                title="Groovy Web Console Scripts Atom Feed"
+                title="Spock Web Console Scripts Atom Feed"
         />
 
         <link rel="stylesheet" type="text/css" href="/css/redmond/jquery-ui-1.7.1.custom.css"/>
@@ -31,7 +31,7 @@
         	SyntaxHighlighter.all();
         </script>
 
-        <script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&login=glaforge&apiKey=R_c6e14f0ec7fd7c31296c8d394cfbe929"></script>
+        <script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&login=spockwebconsole&apiKey=R_1a7f1b35537b57cf77cdfbc7524efc9f"></script>
         <script type="text/javascript" charset="utf-8" src="http://s.bit.ly/TweetAndTrack.js?v=1.01"></script>
     </head>
 
@@ -139,7 +139,7 @@
 
         <div id="commentsArea">
             <script>
-                var idcomments_acct = 'ffac2056f3a0f603b8799858d3af8299';
+                var idcomments_acct = '00b302901e53bc6361575e0150146ba1';
                 var idcomments_post_id = 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}';
                 var idcomments_post_url;
                 </script>

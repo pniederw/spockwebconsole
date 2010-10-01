@@ -16,8 +16,8 @@ repositories {
 
 dependencies {
   // from Maven repos
-  groovy "org.codehaus.groovy:groovy-all:1.7.2"
-  compile "org.spockframework:spock-core:0.4-groovy-1.7-SNAPSHOT@jar"
+  groovy "org.codehaus.groovy:groovy-all:1.7.5"
+  compile "org.spockframework:spock-core:0.5-groovy-1.7-SNAPSHOT@jar"
   compile "junit:junit:4.8.1"
   
   // from lib folder
@@ -43,8 +43,11 @@ task jettyStart(description: "Starts the development application server") << {
 }
 
 task jettyStop(description: "Stops the development application server") << {
-  // works on command line but not here - why?
-  exec """ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " \$1);}'"""  
+  // for some reason, exec'ing this has no effect (although there's no error message)
+  println '''
+Run the following command:
+ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " $1);}'
+  ''' 
 }
 
 task deploy(dependsOn: war, description: "Deploys application to Google App Engine") << {
