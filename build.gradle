@@ -1,8 +1,11 @@
 group = "org.spockframework"
 version = "1.0"
 
-usePlugin "war"
-usePlugin "groovy" 
+apply plugin: "groovy"
+apply plugin: "war"
+apply plugin: "idea"
+apply plugin: "eclipse"
+
 sourceCompatibility = 1.5 
 targetCompatibility = 1.5
 
@@ -12,13 +15,14 @@ repositories {
   flatDir dirs: "$rootDir/lib"
   mavenCentral()
   mavenRepo urls: "http://m2repo.spockframework.org/snapshots"
+  mavenRepo urls: "http://m2repo.spockframework.org/releases"
 }
 
 dependencies {
   // from Maven repos
   groovy "org.codehaus.groovy:groovy-all:1.7.5"
-  compile "org.spockframework:spock-core:0.5-groovy-1.7-SNAPSHOT@jar"
-  compile "junit:junit:4.8.1"
+  compile "org.spockframework:spock-core:0.5-groovy-1.7@jar"
+  compile "junit:junit-dep:4.8.2"
   
   // from lib folder
   runtime ":appengine-api-1.0-sdk:1.3.1"
@@ -34,7 +38,7 @@ war.doLast {
 }
 
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
-  gradleVersion = '0.8' 
+  gradleVersion = '0.9-rc-3'
   jarPath = 'wrapper' 
 }
 
