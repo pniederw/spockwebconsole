@@ -23,11 +23,12 @@ dependencies {
   groovy "org.codehaus.groovy:groovy-all:1.7.5"
   compile "org.spockframework:spock-core:0.5-groovy-1.7@jar"
   compile "junit:junit-dep:4.8.2"
-  
+  runtime "org.hamcrest:hamcrest-core:1.2"
+
   // from lib folder
-  runtime ":appengine-api-1.0-sdk:1.3.1"
-  runtime ":appengine-api-labs:1.3.1"
-  runtime ":gaelyk:0.3.2"
+  runtime ":appengine-api-1.0-sdk:1.4.0"
+  runtime ":appengine-api-labs:1.4.0"
+  runtime ":gaelyk:0.5.6"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
 }

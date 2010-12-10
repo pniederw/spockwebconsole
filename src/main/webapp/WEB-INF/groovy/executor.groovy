@@ -11,6 +11,11 @@ def result = ""
 def output = new ByteArrayOutputStream()
 def stacktrace = new StringWriter()
 
+def emcEvents = []
+def listener = { emcEvent << it } as MetaClassRegistryChangeEventListener
+
+GroovySystem.metaClassRegistry.addMetaClassRegistryChangeEventListener(listener)
+
 ScriptOutput.redirectTo(output) {
   def env = ApiProxy.getCurrentEnvironment()
   ApiProxy.clearEnvironmentForCurrentThread()
@@ -27,6 +32,8 @@ ScriptOutput.redirectTo(output) {
     t.printStackTrace(new PrintWriter(stacktrace))
   } finally {
     ApiProxy.setEnvironmentForCurrentThread(env)
+    GroovySystem.metaClassRegistry.removeMetaClassRegistryChangeEventListener(listener)
+    emcEvents.each { GroovySystem.metaClassRegistry.removeMetaClass(it.clazz) }
   }
 }
 
