@@ -39,8 +39,7 @@ war.doLast {
 }
 
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
-  gradleVersion = '0.9-rc-3'
-  jarPath = 'wrapper' 
+  gradleVersion = '1.0-milestone-1'
 }
 
 task jettyStart(description: "Starts the development application server") << {
