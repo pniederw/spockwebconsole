@@ -5,11 +5,10 @@ apply plugin: "groovy"
 apply plugin: "war"
 apply plugin: "idea"
 apply plugin: "eclipse"
+apply plugin: "gae"
 
 sourceCompatibility = 1.5 
 targetCompatibility = 1.5
-
-def explodedWar = file("$buildDir/exploded")
 
 repositories {
   flatDir dirs: "$rootDir/lib"
@@ -20,47 +19,47 @@ repositories {
 
 dependencies {
   // from Maven repos
-  groovy "org.codehaus.groovy:groovy-all:1.7.5"
-  compile "org.spockframework:spock-core:0.5-groovy-1.7@jar"
+  groovy "org.codehaus.groovy:groovy-all:1.7.10"
+  compile "org.spockframework:spock-core:0.6-groovy-1.7-SNAPSHOT@jar"
   compile "junit:junit-dep:4.8.2"
   runtime "org.hamcrest:hamcrest-core:1.2"
+  runtime "com.google.appengine:appengine-api-1.0-sdk:1.4.2"
+  runtime "com.google.appengine:appengine-api-labs:1.4.2"
 
   // from lib folder
-  runtime ":appengine-api-1.0-sdk:1.4.0"
-  runtime ":appengine-api-labs:1.4.0"
   runtime ":gaelyk:0.5.6"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
 }
 
+def explodedWarDir = file("$buildDir/expoded-war") // this is the default for GAE tasks
+
 war.doLast {
   // create exploded WAR directory
-  ant.unzip src: war.archivePath, dest: explodedWar
+  ant.unzip src: war.archivePath, dest: explodedWarDir as String
+}
+
+gaeRun {
+    webAppSourceDirectory = explodedWarDir
 }
 
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
   gradleVersion = '1.0-milestone-1'
 }
 
-task jettyStart(description: "Starts the development application server") << {
-  exec "dev_appserver.sh $explodedWar.absolutePath"
-}
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = "GitHub"
+            addArtifactPattern 'http://cloud.github.com/downloads/bmuschko/gradle-gae-plugin/[module]-[revision].[ext]'
+        }
+        mavenCentral()
+    }
 
-task jettyStop(description: "Stops the development application server") << {
-  // for some reason, exec'ing this has no effect (although there's no error message)
-  println '''
-Run the following command:
-ps ww -o pid,command | awk '/com.google.appengine.tools.development.DevAppServerMain/ && !/awk/ {system("kill " $1);}'
-  ''' 
-}
-
-task deploy(dependsOn: war, description: "Deploys application to Google App Engine") << {
-  exec "appcfg.sh update $explodedWar.absolutePath"
-}
-
-def exec(command) {
-  println "Executing: $command"
-  def proc = command.execute()
+    dependencies {
+        classpath 'com.google.appengine:appengine-tools-sdk:1.4.2'
+        classpath ':gradle-gae-plugin:0.1'
+    }
 }
 
 
