@@ -32,17 +32,6 @@ dependencies {
   //providedCompile "javax.servlet:servlet-api:2.5"
 }
 
-def explodedWarDir = file("$buildDir/expoded-war") // this is the default for GAE tasks
-
-war.doLast {
-  // create exploded WAR directory
-  ant.unzip src: war.archivePath, dest: explodedWarDir as String
-}
-
-gaeRun {
-    webAppSourceDirectory = explodedWarDir
-}
-
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
   gradleVersion = '1.0-milestone-1'
 }
@@ -58,7 +47,7 @@ buildscript {
 
     dependencies {
         classpath 'com.google.appengine:appengine-tools-sdk:1.4.2'
-        classpath ':gradle-gae-plugin:0.1'
+        classpath ':gradle-gae-plugin:0.2'
     }
 }
 
