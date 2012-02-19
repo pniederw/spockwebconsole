@@ -1,10 +1,10 @@
 <html>
     <head>
         <%
-            def entity = request.getAttribute('entity')
+            def script = request.script
         %>
 
-        <title>Spock Web Console - ${entity?.title ?: 'Untitled Script'}</title>
+        <title>Spock Web Console - ${script?.title ?: 'Untitled Script'}</title>
 
         <link rel="alternate"
                 type="application/atom+xml"
@@ -18,7 +18,7 @@
         <link type="text/css" rel="stylesheet" href="/css/shCore.css"/>
         <link type="text/css" rel="stylesheet" href="/css/shThemeDefault.css"/>
 
-        <script src="/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+        <script src="/js/jquery-1.6.4.min.js" type="text/javascript"></script>
         <script src="/js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
 
         <script language="javascript" src="/js/shCore.js"></script>
@@ -54,19 +54,8 @@
                         </a>
                     </td>
                     <td>
-                        <a id="embedLink" href="#">
-                            <table>
-                                <tr>
-                                    <td><img src="/images/puzzle.png" alt="embed in your blog" align="left" border="0"></td>
-                                    <td><i>Embed</i></td>
-                                </tr>
-                            </table>
-                        </a>
-                    </td>
-
-                    <td>
-                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/script/${entity.key.id}');">
-                            <span style="display:none;">${entity.title} (via #spockwebconsole)</span>
+                        <a href="#" onclick="return TweetAndTrack.open(this, 'http://meetspock.appspot.com/script/${script.key.id}');">
+                            <span style="display:none;">${script.title} (via #spockwebconsole)</span>
                             <table>
                                 <tr>
                                     <td><img src="/images/twitter.png" alt="tweet this script" align="left" border="0"></td>
@@ -77,47 +66,29 @@
                     </td>
                 </tr>
             </table>
-            <div id="embedText" title="Embed This Script">
-                <p>To embed this script in your site, just drop the content below where you want to embed it.</p>
-                <textarea cols="55" rows="14">
-&lt;script&gt;
-    // The ID of this script
-    gc_id = ${entity.key.id};
-
-    // The iframe's width
-    gc_width = 300;
-
-    // The iframe's height
-    gc_height = 100;
-&lt;/script&gt;
-&lt;script language="javascript"
-             src="http://meetspock.appspot.com/js/embed.js"&gt;
-&lt;/script&gt;
-                </textarea>
-            </div>
         </div>
 
-        <h2>${entity?.title ?: 'Untitled Script'}</h2>
+        <h2>${script?.title ?: 'Untitled script'}</h2>
         <div id="publishedby">
             <img src="/images/date.png" align="top">
-            Published ${new com.ocpsoft.pretty.time.PrettyTime().format(entity.dateCreated)}
+            Published ${new com.ocpsoft.pretty.time.PrettyTime().format(script.dateCreated)}
             by
             <%
-                if (entity.author && entity.author != 'Anonymous') {
+                if (script.author && script.author != 'Anonymous') {
             %>
                 <img src="/images/user.png" align="top">
-                <a href="/author/${entity.author}">${entity.author}</a>
+                <a href="/author/${script.author}">${script.author}</a>
             <%
                 } else {
             %>
                 Anonymous
             <%
                 }
-                if (entity?.tags?.join()) {
+                if (script?.tags?.join()) {
             %>
                 with tags
             <%
-                    entity.tags.each { tag ->
+                    script.tags.each { tag ->
             %>
                 <img src="/images/tag_blue.png" align="top">
                 <a href="/tag/${tag}">${tag}</a>
@@ -129,24 +100,22 @@
 
         <div id="actionsBreadcrumb">
             <span class="actionsBreadcrumbHead">Actions &nbsp;&#x27A4;</span>
-            <span class="actionsBreadcrumbChild"><a href="/?id=${entity.key.id}">Edit In Console</a></span>
+            <span class="actionsBreadcrumbChild"><a href="/edit/${script.key.id}">Edit In Console</a></span>
             <span class="actionsBreadcrumbChild"><a href="/">Back To Console</a></span>
             <span class="actionsBreadcrumbChild" id="toggleLineNumbers"><a href="javascript:void(0)">Show/Hide Line Numbers</a></span>
             <span class="actionsBreadcrumbLastChild"><a href="/scripts">View Recent Scripts</a></span>
         </div>
 
-        <pre class="brush:groovy">${entity.script.value.replaceAll('<', '&lt;')}</pre>
+        <pre class="brush:groovy">${script.script.replaceAll('<', '&lt;')}</pre>
 
         <div id="commentsArea">
             <script>
                 var idcomments_acct = '00b302901e53bc6361575e0150146ba1';
-                var idcomments_post_id = 'http://meetspock.appspot.com/view.groovy?id=${entity.key.id}';
+                var idcomments_post_id = 'http://meetspock.appspot.com/view.groovy?id=${script.key.id}';
                 var idcomments_post_url;
                 </script>
                 <span id="IDCommentsPostTitle" style="display:none"></span>
             <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
         </div>
-
-        <% include '/WEB-INF/includes/about.gtpl' %>
     </body>
 </html>

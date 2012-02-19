@@ -40,13 +40,13 @@ ScriptOutput.redirectTo(output) {
 response.contentType = "application/json"
 
 out.println """{
-	executionResult: "${escape(result)}",
- 	outputText: "${escape(output.toString('UTF-8'))}",
- 	stacktraceText: "${escape(stacktrace)}"
+	"executionResult": "${escape(result)}",
+	"outputText": "${escape(output.toString('UTF-8'))}",
+	"stacktraceText": "${escape(stacktrace)}"
 }"""
 
 def escape(object) {
-	object.toString().replaceAll(/\n/, /\\\n/).replaceAll(/"/, /\\"/)
+  object ? object.toString().replaceAll(/\n/, /\\\n/).replaceAll(/\t/, /\\\t/).replaceAll(/"/, /\\"/) : ""
 }
 
 def sanitizeStacktrace(t) {

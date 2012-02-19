@@ -28,7 +28,7 @@ mkp.feed(xmlns: "http://www.w3.org/2005/Atom") {
         name "Peter Niederwieser"
         email "pniederw@gmail.com"
     }
-    generator(uri: "http://gaelyk.appspot.com", version: "0.5.6", "Gaelyk lightweight Groovy toolkit for Google App Engine")
+    generator(uri: "http://gaelyk.appspot.com", version: "1.1", "Gaelyk lightweight Groovy toolkit for Google App Engine")
  
     entities.each { entity ->
         def authorText = entity.author && entity.author != 'Anonymous' ? entity.author : 'Anonymous'

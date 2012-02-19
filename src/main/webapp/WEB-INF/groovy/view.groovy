@@ -1,18 +1,17 @@
 import com.google.appengine.api.datastore.Entity
-import com.google.appengine.api.datastore.KeyFactory
 
-if (params['id']) {
+if (params.id) {
     def id = Long.parseLong(params['id'])
+
     try {
-        def key = KeyFactory.createKey("savedscript", id)
-        Entity entity = datastore.get(key)
+        def savedscript = memcache["savedscript-$id"]
+        Entity script = savedscript ?: datastore.get("savedscript", id)
+        if (!savedscript) memcache["savedscript-$id"] = script
 
-        request['entity'] = entity
-
-		forward params['embed'] ? 'embed.gtpl' : 'view.gtpl'
-
+        request.script = script
+		    forward params['embed'] ? 'embed.gtpl' : 'view.gtpl'
     } catch (Throwable t) {
-        forward 'nosuchscript.gtpl'
+        t.printStackTrace()
     }
 } else {
     forward 'nosuchscript.gtpl'

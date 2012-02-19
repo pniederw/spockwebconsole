@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = "GitHub"
+            addArtifactPattern 'http://cloud.github.com/downloads/bmuschko/gradle-gae-plugin/[module]-[revision].[ext]'
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath ':gradle-gae-plugin:0.5.4'
+    }
+}
+
 group = "org.spockframework"
 version = "1.0"
 
@@ -13,42 +27,36 @@ targetCompatibility = 1.5
 repositories {
   flatDir dirs: "$rootDir/lib"
   mavenCentral()
-  mavenRepo urls: "http://m2repo.spockframework.org/snapshots"
-  mavenRepo urls: "http://m2repo.spockframework.org/releases"
+  maven {
+      url "http://m2repo.spockframework.org/snapshots" 
+  } 
+  maven {
+      url "http://m2repo.spockframework.org/releases"      
+  }
 }
 
 dependencies {
   // from Maven repos
-  groovy "org.codehaus.groovy:groovy-all:1.7.10"
-  compile "org.spockframework:spock-core:0.6-groovy-1.7-SNAPSHOT@jar"
-  compile "junit:junit-dep:4.8.2"
+  groovy "org.codehaus.groovy:groovy-all:1.8.6"
+  compile "org.spockframework:spock-core:0.6-groovy-1.8-SNAPSHOT@jar"
+  compile "junit:junit-dep:4.9"
   runtime "org.hamcrest:hamcrest-core:1.2"
-  runtime "com.google.appengine:appengine-api-1.0-sdk:1.4.2"
-  runtime "com.google.appengine:appengine-api-labs:1.4.2"
+  runtime "com.google.appengine:appengine-api-1.0-sdk:1.6.2"
+  runtime "com.google.appengine:appengine-api-labs:1.6.2"
+
+  gaeSdk 'com.google.appengine:appengine-java-sdk:1.6.2'
 
   // from lib folder
-  runtime ":gaelyk:0.5.6"
+  runtime ":gaelyk:1.1"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
 }
 
+downloadSdk = true
+
 task wrapper(type: Wrapper, description: "Creates Gradle wrapper (rarely needed)") {
-  gradleVersion = '1.0-milestone-1'
+  gradleVersion = '1.0-milestone-8'
 }
 
-buildscript {
-    repositories {
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = "GitHub"
-            addArtifactPattern 'http://cloud.github.com/downloads/bmuschko/gradle-gae-plugin/[module]-[revision].[ext]'
-        }
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.google.appengine:appengine-tools-sdk:1.4.2'
-        classpath ':gradle-gae-plugin:0.2'
-    }
-}
 
 
