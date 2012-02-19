@@ -72,7 +72,8 @@ public class TestListener extends RunListener {
       result.append("   FAILED\n");
       firstFailure = false;
     }
-    result.append("\n").append(failure.getTrace());
+    result.append("\n");
+    appendFailure(failure);
   }
 
   public void testAssumptionFailure(Failure failure) {
@@ -80,7 +81,8 @@ public class TestListener extends RunListener {
       result.append("   ASSUMPTION FAILED\n");
       firstFailure = false;
     }
-    result.append("\n").append(failure.getTrace());
+    result.append("\n");
+    appendFailure(failure);
   }
 
   public void testIgnored(Description description) {
@@ -95,5 +97,14 @@ public class TestListener extends RunListener {
 
   public String getResult() {
     return result.toString();
+  }
+  
+  private void appendFailure(Failure failure) {
+    String[] lines = failure.getTrace().split("\n");
+    for (String line : lines) {
+      result.append("   ");
+      result.append(line.replace("\t", ""));
+      result.append("\n");
+    }
   }
 }
