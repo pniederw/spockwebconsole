@@ -1,13 +1,13 @@
 import com.google.appengine.api.datastore.Entity
 import com.ocpsoft.pretty.time.PrettyTime
 
-//def recentScriptsInCache = memcache.recentScripts
-def entities = datastore.execute {
+def recentScriptsInCache = memcache.recentScripts
+def entities = recentScriptsInCache ?: datastore.execute {
     select all from savedscript
     sort desc by dateCreated
     limit params.limit?.toInteger() ?: 200
 }
-//if (!recentScriptsInCache) memcache.recentScripts = entities
+if (!recentScriptsInCache) memcache.recentScripts = entities
 
 def tagMap    = entities.collect { it.tags   }.flatten().groupBy { it }
 def authorMap = entities.collect { it.author }.flatten().groupBy { it }
