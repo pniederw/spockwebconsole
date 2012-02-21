@@ -43,11 +43,11 @@ dependencies {
   runtime "org.hamcrest:hamcrest-core:1.2"
   runtime "com.google.appengine:appengine-api-1.0-sdk:1.6.2"
   runtime "com.google.appengine:appengine-api-labs:1.6.2"
+  runtime "org.gaelyk:gaelyk:1.1"
 
   gaeSdk 'com.google.appengine:appengine-java-sdk:1.6.2'
 
   // from lib folder
-  runtime ":gaelyk:1.1"
   runtime ":ocpsoft-pretty-time-1:1.0.2"
   //providedCompile "javax.servlet:servlet-api:2.5"
 }
